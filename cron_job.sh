@@ -9,6 +9,6 @@ else
 fi
  
 # renew certbot certificate
-docker-compose -f /opt/letsencrypt_auto_renew/docker-compose.yaml run --rm certbot
-docker-compose -f /opt/letsencrypt_auto_renew/docker-compose.yaml exec nginx nginx -s reload
+docker-compose -f /opt/letsencrypt-auto-renew/docker-compose.yaml run --rm certbot
+docker-compose -f /opt/letsencrypt-auto-renew/docker-compose.yaml exec nginx nginx -s reload
 
