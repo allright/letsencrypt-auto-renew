@@ -1,5 +1,5 @@
 
-export EMAIL=andrey.syvrachev@gmail.com
+export EMAIL=email@gmail.com
 
 export DOMAIN=registry.yourteams.org
 
