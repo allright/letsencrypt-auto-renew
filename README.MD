@@ -1,4 +1,8 @@
 
+For debugging, uncomment line, to prevent letsencrypt rate limiting:     
+```
+# - "--certificatesresolvers.letsencrypt.acme.caserver=https://acme-staging-v02.api.letsencrypt.org/directory"
+```
 
 1. copy docker-compose.yaml to your server
 2. ssh to your server, and setup environment variables:
@@ -41,7 +45,10 @@ docker swarm init
 ```
 docker stack deploy -c ./docker-compose.yaml reg
 ```
-
+6. comment back line:
+```
+# - "--certificatesresolvers.letsencrypt.acme.caserver=https://acme-staging-v02.api.letsencrypt.org/directory"
+```
 
 
 more info: https://dockerswarm.rocks/traefik/
