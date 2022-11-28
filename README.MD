@@ -1,7 +1,18 @@
-1. Copy contents of this repository into /opt/letsencrypt-auto-renew/ directory on your server
-2. You are free to change directory name, but also you have to change ./etc/crontab, cron_job.sh for abother name of project directory
-3. Add to DNS records your server IP
-4. Run ./install.sh your.domain email@your.domain  (also use your domain names)
-  - certificates will be issued first time
-  - cron job will be scheduled for automatic renew
-5. Use your server, using docker-compose up
+
+
+# more info: https://dockerswarm.rocks/traefik/
+
+export EMAIL=andrey.syvrachev@gmail.com
+export DOMAIN=registry.yourteams.org
+export USERNAME=admin
+export PASSWORD=changethis
+export HASHED_PASSWORD=$(openssl passwd -apr1 $PASSWORD)
+
+
+echo $HASHED_PASSWORD
+
+It will look like:
+  $apr1$89eqM5Ro$CxaFELthUKV21DpI3UTQO.
+
+
+Warning!!! For traefik 2.0 -> Yo have to replace each char '$' -> '$$'

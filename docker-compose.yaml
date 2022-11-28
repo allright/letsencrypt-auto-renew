@@ -1,29 +1,43 @@
-version: "3"
+version: "3.9"
+
+volumes:
+  letsencrypt:
+  registry:
+
 services:
 
-  nginx:
-    image: nginx:latest
-    restart: unless-stopped
-    environment:
-      - DOMAIN
+  traefik:
+    image: "traefik:v2.9.5"
+    command:
+      - "--providers.docker=true"
+      - "--providers.docker.swarmMode=true"
+      - "--providers.docker.exposedbydefault=false"
+      - "--entrypoints.web.address=:80"
+      - "--entrypoints.websecure.address=:443"
+      - "--certificatesresolvers.letsencrypt.acme.httpchallenge=true"
+      - "--certificatesresolvers.letsencrypt.acme.httpchallenge.entrypoint=web"
+     # - "--certificatesresolvers.letsencrypt.acme.caserver=https://acme-staging-v02.api.letsencrypt.org/directory"
+      - "--certificatesresolvers.letsencrypt.acme.email=${EMAIL?Variable not set}"
+      - "--certificatesresolvers.letsencrypt.acme.storage=/letsencrypt/acme.json"
     ports:
-      - 80:80
-      - 443:443
+      - "80:80"
+      - "443:443"
     volumes:
-      - ./etc/nginx/templates:/etc/nginx/templates:ro
-      - ./etc/letsencrypt:/etc/letsencrypt:ro
-      - ./certbot/data:/var/www/certbot
-      - ./html:/var/www/html
+      - letsencrypt:/letsencrypt
+      - "/var/run/docker.sock:/var/run/docker.sock:ro"
 
-  certbot:
-    image: certbot/certbot:latest
-    depends_on:
-      - nginx
-    command: >-
-             certonly --reinstall --webroot --webroot-path=/var/www/certbot
-             --email ${EMAIL} --agree-tos --no-eff-email
-             -d ${DOMAIN}
+  registry:
+    image: registry:2
     volumes:
-      - ./etc/letsencrypt:/etc/letsencrypt
-      - ./certbot/data:/var/www/certbot
+      - registry:/var/lib/registry
+    deploy:
+      labels:
+        - "traefik.enable=true"
+        - "traefik.http.services.routers.loadbalancer.server.port=5000"
+        - "traefik.http.routers.registry.rule=Host(`${DOMAIN?Variable not set}`)"
+        - "traefik.http.routers.registry.entrypoints=websecure"
+        - "traefik.http.routers.registry.tls.certresolver=letsencrypt"
+        - "traefik.http.routers.registry.middlewares=auth-registry"
 
+        # login: allright, password: krishna108
+        - "traefik.http.middlewares.auth-registry.basicauth.users=${USERNAME?Variable not set}:${HASHED_PASSWORD?Variable not set}"

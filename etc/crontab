@@ -1,3 +1,0 @@
-# m h  dom mon dow   command
-0 5  * * *  /opt/letsencrypt_auto_renew/cron_job.sh
-
