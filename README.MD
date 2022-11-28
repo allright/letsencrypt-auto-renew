@@ -19,9 +19,8 @@ It will look like:
 $apr1$89eqM5Ro$CxaFELthUKV21DpI3UTQO.
 ```
 
-#Warning!!! For traefik 2.0
-You have to replace each char '$' -> '$$'
-example:
+# Warning
+For traefik 2 and upper, you have to replace each char '$' to '$$', example:
 ```
 $apr1$89eqM5Ro$CxaFELthUKV21DpI3UTQO.
 ```
@@ -29,6 +28,7 @@ will be changed to:
 ```
 $$apr1$$89eqM5Ro$$CxaFELthUKV21DpI3UTQO.
 ```
+#
 3. install docker
 ```
 apt install docker.io
