@@ -39,5 +39,4 @@ services:
         - "traefik.http.routers.registry.tls.certresolver=letsencrypt"
         - "traefik.http.routers.registry.middlewares=auth-registry"
 
-        # login: allright, password: krishna108
         - "traefik.http.middlewares.auth-registry.basicauth.users=${USERNAME?Variable not set}:${HASHED_PASSWORD?Variable not set}"
