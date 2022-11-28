@@ -1,11 +1,12 @@
 
-
-# more info: https://dockerswarm.rocks/traefik/
-
 export EMAIL=andrey.syvrachev@gmail.com
+
 export DOMAIN=registry.yourteams.org
+
 export USERNAME=admin
+
 export PASSWORD=changethis
+
 export HASHED_PASSWORD=$(openssl passwd -apr1 $PASSWORD)
 
 
@@ -16,3 +17,6 @@ It will look like:
 
 
 Warning!!! For traefik 2.0 -> Yo have to replace each char '$' -> '$$'
+
+
+more info: https://dockerswarm.rocks/traefik/
